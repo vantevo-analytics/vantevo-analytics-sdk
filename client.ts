@@ -4,7 +4,7 @@ import { APIError, ConfigClient, ParamsRequestStats, VantevoEvent } from "./type
 
 
 
-const DEFAULT_BASE_URL = "https://vantevo.io";
+const DEFAULT_BASE_URL = "https://api.vantevo.io";
 const SEND_EVENT_API = DEFAULT_BASE_URL + "/v1/event";
 const STATS_API = DEFAULT_BASE_URL + "/v1";
 
