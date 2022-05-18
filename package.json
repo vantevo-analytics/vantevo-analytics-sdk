@@ -2,7 +2,7 @@
   "name": "vantevo-analytics-sdk",
   "version": "1.0.0-beta.1",
   "description": "Official Javascript client SDK for Vantevo Analytics.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
