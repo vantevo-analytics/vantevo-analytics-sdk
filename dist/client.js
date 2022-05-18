@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VantevoAnalytics = void 0;
 const axios_1 = __importDefault(require("axios"));
-const DEFAULT_BASE_URL = "https://vantevo.io";
+const DEFAULT_BASE_URL = "https://api.vantevo.io";
 const SEND_EVENT_API = DEFAULT_BASE_URL + "/v1/event";
 const STATS_API = DEFAULT_BASE_URL + "/v1";
 const REFERRER_PARAMS = [
