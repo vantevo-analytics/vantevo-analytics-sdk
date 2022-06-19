@@ -1,4 +1,4 @@
-# The analysis of your website, but simpler
+# The analytics of your website, but simpler
 
 **Vantevo Analytics** is the alternative platform to Google Analytics that respects privacy, because it does not need cookies not compliant with the GDPR. Easy to use, light and can be integrated into any website and back-end.
 
@@ -14,12 +14,12 @@ To start tracking page views, events, and getting statistics, you need to initia
 
 | Option        | Type                 | Description                                                                                                                  |
 | ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| accessToken   | `string` (required)  | To create an api key read our [guide](https://vantevo.io/docs/account/impostazioni).                                         |
+| accessToken   | `string` (required)  | To create an api key read our [guide](https://vantevo.io/docs/account/settings).                                         |
 | domain        | `string` (required)  | Enter the domain you want to use to collect statistics.The domain must not include http, https, or www. Example: example.com |
 | protocol      | `string` (required)  | http or https                                                                                                                |
 | userAgent     | `string` (optional)  | To monitor page views and events, requests must have a `user-agent`, here you can assign a global ùser-agent`.               |
-| xForwardedFor | `string` (optional)  | To monitor page views and events requests must have an `ip`, here you can assign a global` ip`.                              |
-| dev           | `boolean` (optional) | Tracker will not send data to server, please check console to view request information.                                      |
+| xForwardedFor | `string` (optional)  | To monitor page views and events requests must have an `ip`, here you can assign a global `ip`.                              |
+| dev           | `boolean` (optional) | Tracker will not send data to server, please check console/log file to view request information.                                      |
 
 ```ts
 const { VantevoAnalytics } = require("vantevo-analytics-sdk");
@@ -53,7 +53,7 @@ var client = new VantevoAnalytics({
 | referrer | `string` (optional) | In this field you can enter a referrer for your request. Default: `null`. |
 | width | `string` (optional) | This field is used to save the screen size. Default: `0`.|
 | height | `string` (optional) | This field is used to save the screen size. Default: `0`. |
-| meta | `object` (optional) | Enter the event values `meta_key` and` meta_value`, [read more how to create an event](https://vantevo.io/docs/come-creare-un-evento#evento) Default: `{}`. |
+| meta | `object` (optional) | Enter the event values `meta_key` and` meta_value`, [read more how to create an event](https://vantevo.io/docs/how-to-create-an-event#event) Default: `{}`. |
 
 ```ts
 const { VantevoAnalytics } = require("vantevo-analytics-sdk");
@@ -86,9 +86,7 @@ app.use(client.express());
 
 | Option        | Type                | Description                                                                                                                              |
 | ------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| event         | `object` (required) | Check out our guide to see all the parameters you can use like, [click here](https://vantevo.io/docs/api-sdk/api-statistiche#parametri). |
-| userAgent     | `string` (optional) | To monitor page views and events, requests must have a `user-agent`, you can use this parameter if you don't have a global user-agent.   |
-| xForwardedFor | `string` (optional) | To monitor page views and events requests must have an `ip`, you can use this parameter if you don't have a global ip.                   |
+| filters       | `object` (required) | Check out our guide to see all the parameters you can use like, [click here](https://vantevo.io/docs/api-sdk/api-statistics#filters). |
 
 ### Example Statistics
 
