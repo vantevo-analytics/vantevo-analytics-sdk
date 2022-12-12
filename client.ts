@@ -1,11 +1,12 @@
 import axios, { AxiosInstance } from "axios";
 import { NextFunction, Request, Response } from "express";
-import { APIError, ConfigClient, ParamsRequestStats, VantevoEvent } from "./types";
+import { APIError, ConfigClient, ParamsRequestStats, VantevoEcommerce, VantevoEvent } from "./types";
 
 
 
 const DEFAULT_BASE_URL = "https://api.vantevo.io";
 const SEND_EVENT_API = DEFAULT_BASE_URL + "/v1/event";
+const SEND_EVENT_ECOMMERCE_API = DEFAULT_BASE_URL + "/v1/event-ecommerce";
 const STATS_API = DEFAULT_BASE_URL + "/v1";
 
 const REFERRER_PARAMS = [
@@ -149,6 +150,42 @@ export class VantevoAnalytics {
         }
     }
 
+    async trackEcommerce(event: VantevoEcommerce, userAgent: string = null, xForwardedFor: string = null, retry: boolean = true): Promise<APIError | string> {
+        let hit: VantevoEcommerce = { title: null, referrer: null, width: 0, height: 0, ...event };
+
+        if (this.dev) {
+            console.log("HIT:", hit);
+            return;
+        }
+
+        try {
+            await this.client.post(SEND_EVENT_ECOMMERCE_API, hit, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": userAgent || this.userAgent,
+                    "X-Forwarded-For": xForwardedFor || this.xForwardedFor
+                }
+            });
+            return Promise.resolve<string>("OK");
+        } catch (e: any) {
+            if (e.response && e.response.status) {
+                if (retry) {
+                    try {
+                        return this.trackEcommerce(event, userAgent, xForwardedFor, false);
+                    } catch (e) {
+                        return Promise.reject(e);
+                    }
+                }
+
+                return Promise.reject<APIError>({
+                    status: e.response.status,
+                    error: e.response.data
+                });
+            }
+
+            return Promise.reject(e);
+        }
+    }
 
     /**
      * 

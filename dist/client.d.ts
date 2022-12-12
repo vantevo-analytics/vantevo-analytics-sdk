@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { APIError, ConfigClient, ParamsRequestStats, VantevoEvent } from "./types";
+import { APIError, ConfigClient, ParamsRequestStats, VantevoEcommerce, VantevoEvent } from "./types";
 export declare class VantevoAnalytics {
     private client;
     private accessToken;
@@ -25,6 +25,7 @@ export declare class VantevoAnalytics {
      * @returns OK
      */
     event(event: VantevoEvent, userAgent?: string, xForwardedFor?: string, retry?: boolean): Promise<APIError | string>;
+    trackEcommerce(event: VantevoEcommerce, userAgent?: string, xForwardedFor?: string, retry?: boolean): Promise<APIError | string>;
     /**
      *
      * @param params

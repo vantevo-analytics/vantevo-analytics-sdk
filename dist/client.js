@@ -16,6 +16,7 @@ exports.VantevoAnalytics = void 0;
 const axios_1 = __importDefault(require("axios"));
 const DEFAULT_BASE_URL = "https://api.vantevo.io";
 const SEND_EVENT_API = DEFAULT_BASE_URL + "/v1/event";
+const SEND_EVENT_ECOMMERCE_API = DEFAULT_BASE_URL + "/v1/event-ecommerce";
 const STATS_API = DEFAULT_BASE_URL + "/v1";
 const REFERRER_PARAMS = [
     "ref",
@@ -131,6 +132,42 @@ class VantevoAnalytics {
                     if (retry) {
                         try {
                             return this.event(event, userAgent, xForwardedFor, false);
+                        }
+                        catch (e) {
+                            return Promise.reject(e);
+                        }
+                    }
+                    return Promise.reject({
+                        status: e.response.status,
+                        error: e.response.data
+                    });
+                }
+                return Promise.reject(e);
+            }
+        });
+    }
+    trackEcommerce(event, userAgent = null, xForwardedFor = null, retry = true) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let hit = Object.assign({ title: null, referrer: null, width: 0, height: 0 }, event);
+            if (this.dev) {
+                console.log("HIT:", hit);
+                return;
+            }
+            try {
+                yield this.client.post(SEND_EVENT_ECOMMERCE_API, hit, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "User-Agent": userAgent || this.userAgent,
+                        "X-Forwarded-For": xForwardedFor || this.xForwardedFor
+                    }
+                });
+                return Promise.resolve("OK");
+            }
+            catch (e) {
+                if (e.response && e.response.status) {
+                    if (retry) {
+                        try {
+                            return this.trackEcommerce(event, userAgent, xForwardedFor, false);
                         }
                         catch (e) {
                             return Promise.reject(e);
